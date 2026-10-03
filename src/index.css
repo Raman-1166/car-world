@@ -1,0 +1,219 @@
+@import "tailwindcss";
+
+@theme {
+  --font-display: "Barlow Condensed", "Oswald", "Arial Narrow", Impact, sans-serif;
+  --font-body: "Inter", "Helvetica Neue", Arial, sans-serif;
+  --color-ink: #050505;
+  --color-ink-2: #0a0a0a;
+  --color-ink-3: #111111;
+  --color-steel: #8a8d93;
+  --color-bone: #ecebe7;
+  --color-racing: #c1121f;
+}
+
+:root {
+  --red: #c1121f;
+  --ease-cine: cubic-bezier(0.76, 0, 0.24, 1);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+html {
+  background: #050505;
+  color: #ecebe7;
+  scroll-behavior: auto;
+  -webkit-text-size-adjust: 100%;
+}
+
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+body {
+  margin: 0;
+  background: #050505;
+  font-family: var(--font-body);
+  font-weight: 300;
+  overflow-x: clip;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: var(--red);
+  color: #fff;
+}
+
+@media (pointer: fine) {
+  html,
+  body,
+  a,
+  button,
+  input,
+  [role="button"] {
+    cursor: none !important;
+  }
+}
+
+canvas {
+  outline: none;
+  touch-action: pan-y;
+}
+
+input::placeholder {
+  color: rgba(236, 235, 231, 0.3);
+}
+
+@layer components {
+  /* ---------- Typography ---------- */
+  .display {
+    font-family: var(--font-display);
+    font-weight: 700;
+    text-transform: uppercase;
+    line-height: 0.84;
+    letter-spacing: -0.012em;
+  }
+  .display-xl {
+    font-size: clamp(3.6rem, 12.5vw, 13rem);
+  }
+  .display-lg {
+    font-size: clamp(3rem, 9vw, 9rem);
+  }
+  .display-md {
+    font-size: clamp(2.4rem, 6vw, 6rem);
+  }
+  .outline {
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(236, 235, 231, 0.42);
+  }
+  .label {
+    font-family: var(--font-body);
+    font-weight: 400;
+    font-size: 0.66rem;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+  }
+  .mono-num {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* ---------- Surfaces ---------- */
+  .carbon {
+    background-color: #0a0a0a;
+    background-image:
+      linear-gradient(45deg, rgba(255, 255, 255, 0.025) 25%, transparent 25%, transparent 75%, rgba(255, 255, 255, 0.025) 75%),
+      linear-gradient(45deg, rgba(255, 255, 255, 0.025) 25%, transparent 25%, transparent 75%, rgba(255, 255, 255, 0.025) 75%);
+    background-size: 6px 6px;
+    background-position: 0 0, 3px 3px;
+  }
+
+  /* ---------- Buttons ---------- */
+  .btn {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.9rem;
+    padding: 1.05rem 1.7rem;
+    font-size: 0.66rem;
+    font-weight: 500;
+    letter-spacing: 0.26em;
+    text-transform: uppercase;
+    overflow: hidden;
+    isolation: isolate;
+    white-space: nowrap;
+    transition: color 0.5s var(--ease-out), border-color 0.5s var(--ease-out);
+  }
+  .btn::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    transform: translateY(101%);
+    transition: transform 0.55s var(--ease-cine);
+  }
+  .btn:hover::before {
+    transform: translateY(0);
+  }
+  .btn-red {
+    background: var(--red);
+    color: #fff;
+  }
+  .btn-red::before {
+    background: #ecebe7;
+  }
+  .btn-red:hover {
+    color: #050505;
+  }
+  .btn-ghost {
+    border: 1px solid rgba(236, 235, 231, 0.28);
+    color: #ecebe7;
+  }
+  .btn-ghost::before {
+    background: #ecebe7;
+  }
+  .btn-ghost:hover {
+    color: #050505;
+    border-color: #ecebe7;
+  }
+
+  .link-line {
+    position: relative;
+  }
+  .link-line::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -5px;
+    height: 1px;
+    background: currentColor;
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.5s var(--ease-cine);
+  }
+  .link-line:hover::after,
+  .link-line[data-active="true"]::after {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    scrollbar-width: none;
+  }
+}
+
+/* ---------- Keyframes ---------- */
+@keyframes spin-slow {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes eq {
+  0%,
+  100% {
+    transform: scaleY(0.25);
+  }
+  50% {
+    transform: scaleY(1);
+  }
+}
+@keyframes bob {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(6px);
+  }
+}
