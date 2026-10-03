@@ -42,18 +42,18 @@ export function Navbar({ visible, onSearch, onMenu }: { visible: boolean; onSear
       transition={{ duration: 1.3, ease: EASE_OUT, delay: visible ? 1.2 : 0 }}
     >
       <div
-        className={`flex items-center justify-between px-6 transition-all duration-700 [transition-timing-function:cubic-bezier(.16,1,.3,1)] sm:px-[3.2vw] ${
+        className={`grid grid-cols-[1fr_auto_1fr] items-center px-6 transition-all duration-700 [transition-timing-function:cubic-bezier(.16,1,.3,1)] sm:px-[3.2vw] ${
           scrolled ? "border-b border-white/[0.07] bg-black/45 py-3 backdrop-blur-2xl" : "border-b border-transparent bg-transparent py-6 backdrop-blur-0"
         }`}
       >
         {/* logo */}
-        <button onClick={() => scrollToTarget(0, 0, 2.4)} className="display flex flex-col text-left text-[1.15rem] leading-[0.82] tracking-[0.04em]" aria-label="Car World — top">
+        <button onClick={() => scrollToTarget(0, 0, 2.4)} className="col-start-1 justify-self-start display flex flex-col text-left text-[1.15rem] leading-[0.82] tracking-[0.04em]" aria-label="Car World — top">
           <span>CAR</span>
           <span className="text-white/55">WORLD</span>
         </button>
 
         {/* links */}
-        <nav className={`hidden items-center transition-all duration-700 lg:flex ${scrolled ? "gap-9" : "gap-12"}`}>
+        <nav className={`col-start-2 justify-self-center hidden items-center transition-all duration-700 lg:flex ${scrolled ? "gap-9" : "gap-12"}`}>
           {LINKS.map((l) => (
             <button
               key={l.id}
@@ -70,7 +70,7 @@ export function Navbar({ visible, onSearch, onMenu }: { visible: boolean; onSear
         </nav>
 
         {/* actions */}
-        <div className="flex items-center gap-7">
+        <div className="col-start-3 justify-self-end flex items-center gap-7">
           <button onClick={onSearch} className="label link-line hidden text-white/70 hover:text-bone sm:block">
             Search
           </button>

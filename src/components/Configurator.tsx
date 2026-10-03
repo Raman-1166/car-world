@@ -384,15 +384,15 @@ export function Configurator({ build, setBuild }: { build: Build; setBuild: (b: 
               </span>
             </div>
           </div>
-          <div className="mt-7 flex flex-wrap gap-3">
-            <Magnetic>
-              <button className="btn btn-red" onClick={save}>
+          <div className="mt-7 flex flex-col min-[421px]:flex-row min-[421px]:flex-wrap gap-3">
+            <Magnetic className="w-full min-[421px]:w-auto">
+              <button className="btn btn-red w-full min-[421px]:w-auto justify-center" onClick={save}>
                 Save build
               </button>
             </Magnetic>
-            <Magnetic>
+            <Magnetic className="w-full min-[421px]:w-auto">
               <button
-                className="btn btn-ghost"
+                className="btn btn-ghost w-full min-[421px]:w-auto justify-center"
                 onClick={() => {
                   sound.tick();
                   setModal("request");

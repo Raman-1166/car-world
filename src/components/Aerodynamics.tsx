@@ -273,7 +273,7 @@ export function Aerodynamics() {
         </h2>
 
         <div className="absolute inset-x-6 bottom-8 flex flex-col justify-between gap-8 sm:inset-x-[6vw] sm:bottom-[7vh] lg:flex-row lg:items-end">
-          <div className="pointer-events-auto flex flex-wrap gap-x-8 gap-y-3 lg:block lg:space-y-1">
+          <div className="pointer-events-auto grid grid-cols-2 gap-x-8 gap-y-3 lg:block lg:space-y-1">
             {MODES.map((m, i) => (
               <button
                 key={m.id}
@@ -283,7 +283,7 @@ export function Aerodynamics() {
                 }}
                 className={`group flex items-center gap-4 text-left transition-colors duration-500 ${mode === m.id ? "text-bone" : "text-white/35 hover:text-white/75"}`}
               >
-                <span className="mono-num w-5 text-xs">0{i + 1}</span>
+                <span className="mono-num w-5 shrink-0 text-xs">0{i + 1}</span>
                 <span className="display text-3xl sm:text-5xl">{m.title}</span>
                 <span className={`hidden h-px bg-racing transition-all duration-700 lg:block ${mode === m.id ? "w-12" : "w-0"}`} />
               </button>

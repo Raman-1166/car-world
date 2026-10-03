@@ -235,7 +235,7 @@ function DetailInner({ spec, onClose, onConfigure }: { spec: CarSpec; onClose: (
           </dl>
         </motion.div>
 
-        <motion.div {...item(0.2)} className="flex flex-wrap items-end gap-x-8 gap-y-4 sm:gap-x-12">
+        <motion.div {...item(0.2)} className="grid grid-cols-2 items-end gap-x-8 gap-y-5 sm:grid-cols-4 sm:gap-x-12 lg:flex lg:flex-wrap">
           {[
             [String(spec.hp), "HP"],
             [String(spec.nm), "NM"],
@@ -252,9 +252,9 @@ function DetailInner({ spec, onClose, onConfigure }: { spec: CarSpec; onClose: (
         <motion.div {...item(0.3)} className="pointer-events-auto flex flex-col items-start gap-4 lg:items-end">
           <div className="label text-white/40 lg:hidden">From {fmtPrice(spec.price)}</div>
           <p className="hidden max-w-[16rem] text-right text-[0.8rem] font-light leading-relaxed text-white/50 lg:block">{spec.tagline}</p>
-          <Magnetic>
+          <Magnetic className="w-full lg:w-auto">
             <button
-              className="btn btn-red"
+              className="btn btn-red w-full lg:w-auto justify-center"
               onClick={() => {
                 sound.tick();
                 onConfigure(spec.id);

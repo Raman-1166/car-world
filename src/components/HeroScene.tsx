@@ -337,18 +337,18 @@ export function HeroScene({ started, onReady }: { started: boolean; onReady: () 
               <p className="label text-white/60">Where engineering meets emotion.</p>
             </MaskLine>
             <motion.div
-              className="flex flex-wrap gap-3"
+              className="flex flex-col min-[481px]:flex-row items-stretch gap-3 w-full min-[481px]:w-auto"
               initial={{ opacity: 0, y: 18 }}
               animate={show ? { opacity: 1, y: 0 } : { opacity: 0, y: 18 }}
               transition={{ duration: 1, delay: 0.75, ease: [0.16, 1, 0.3, 1] }}
             >
-              <Magnetic>
-                <button className="btn btn-red" onClick={() => scrollToTarget("#collection", 0, 2.4)} data-cursor="btn">
+              <Magnetic className="w-full min-[481px]:w-auto">
+                <button className="btn btn-red w-full min-[481px]:w-auto justify-center" onClick={() => scrollToTarget("#collection", 0, 2.4)} data-cursor="btn">
                   Explore collection
                 </button>
               </Magnetic>
-              <Magnetic>
-                <button className="btn btn-ghost" onClick={() => scrollToTarget("#configurator", 0, 2.6)} data-cursor="btn">
+              <Magnetic className="w-full min-[481px]:w-auto">
+                <button className="btn btn-ghost w-full min-[481px]:w-auto justify-center" onClick={() => scrollToTarget("#configurator", 0, 2.6)} data-cursor="btn">
                   Build your car
                 </button>
               </Magnetic>

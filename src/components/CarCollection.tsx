@@ -259,7 +259,7 @@ export function CarCollection({ onOpen }: { onOpen: (id: string) => void }) {
                   initial="in"
                   animate="show"
                   exit="out"
-                  className="flex flex-col justify-between gap-7 lg:flex-row lg:items-end"
+                  className="flex flex-col justify-between gap-7 gap-y-8 pr-16 lg:flex-row lg:items-end lg:pr-0"
                 >
                   <div>
                     <div className="mb-4 flex items-center gap-5 overflow-hidden">
