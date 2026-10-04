@@ -3,3 +3,11 @@ dist/
 .env
 .DS_Store
 *.local
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Netlify build output
+.netlify/
