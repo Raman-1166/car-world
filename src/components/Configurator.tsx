@@ -281,73 +281,68 @@ export function Configurator({ build, setBuild }: { build: Build; setBuild: (b: 
 
   return (
     <section id="configurator" className="relative bg-ink">
-      {/* header */}
-      <div className="relative z-20 px-6 pb-6 pt-[16vh] sm:px-[4vw] lg:absolute lg:left-0 lg:top-[10vh] lg:pb-0 lg:pt-0">
-        <div className="label mb-5 flex items-center gap-4 text-white/50">
-          <span className="mono-num text-racing">03</span>
-          <span className="h-px w-12 bg-white/25" />
-          <span>Configurator</span>
-        </div>
-        <h2 className="display text-[clamp(2.8rem,5.6vw,6rem)] leading-[0.86]">
-          <MaskLine>BUILD YOUR</MaskLine>
-          <MaskLine delay={0.1}>
-            <span className="outline">MACHINE</span>
-          </MaskLine>
-        </h2>
-        <div className="mt-6 flex flex-wrap gap-x-6 gap-y-2">
-          {CARS.map((c) => (
-            <button
-              key={c.id}
-              onClick={() => {
-                sound.tick();
-                setBuild(defaultBuild(c.id));
-              }}
-              data-active={c.id === build.carId}
-              className={`label link-line pb-1 transition-colors ${c.id === build.carId ? "text-bone" : "text-white/40 hover:text-bone"}`}
-            >
-              {c.name}
-            </button>
-          ))}
-        </div>
-      </div>
+      {/*
+        Mobile:  flex-col stack — left panel | canvas | right panel
+        Desktop: 3-col grid [22rem | 1fr | 22rem], min-h-screen
+        Canvas fills its grid cell via absolute; panels are normal flow.
+      */}
+      <div className="flex flex-col lg:grid lg:grid-cols-[22rem_1fr_22rem] lg:min-h-screen">
 
-      {/* canvas */}
-      <div ref={dragRef} data-cursor="drag" className="relative h-[62vh] w-full lg:absolute lg:inset-0 lg:h-auto">
-        <LazyCanvas className="absolute inset-0" camera={{ position: [5, 2, 6], fov: 30, near: 0.1, far: 70 }}>
-          <ConfigWorld build={build} tab={tab} drag={drag} quality={mobile ? "low" : "high"} />
-        </LazyCanvas>
-        <div className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-ink to-transparent" />
-        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-ink to-transparent" />
-        <div className="label pointer-events-none absolute bottom-4 left-1/2 -translate-x-1/2 text-white/35 lg:bottom-[5vh]">Drag to orbit</div>
-      </div>
+        {/* ══ LEFT PANEL ══════════════════════════════════════════ */}
+        <div className="flex flex-col px-7 pt-12 pb-10 sm:px-10 lg:px-10 lg:pt-16 lg:pb-12 border-b border-white/10 lg:border-b-0 lg:border-r lg:border-white/10 overflow-y-auto">
 
-      {/* panels */}
-      <div className="relative z-20 px-6 pb-20 pt-6 sm:px-[4vw] lg:pointer-events-none lg:absolute lg:inset-0 lg:p-0 lg:min-h-[820px]">
-        <div className="lg:pointer-events-auto lg:absolute lg:left-[4vw] lg:top-[34vh] lg:w-[20rem]">
-          <div className="no-scrollbar -mx-6 flex gap-6 overflow-x-auto px-6 lg:mx-0 lg:block lg:overflow-visible lg:px-0">
-            {TABS.map((t, i) => (
+          {/* section label */}
+          <div className="label mb-8 flex items-center gap-4 text-white/40">
+            <span className="mono-num text-racing">03</span>
+            <span className="h-px w-10 bg-white/20" />
+            <span>Configurator</span>
+          </div>
+
+          {/* heading */}
+          <h2 className="display text-[clamp(2.6rem,3.6vw,4.8rem)] leading-[0.86] mb-8">
+            <MaskLine>BUILD YOUR</MaskLine>
+            <MaskLine delay={0.1}>
+              <span className="outline">MACHINE</span>
+            </MaskLine>
+          </h2>
+
+          {/* car selector */}
+          <div className="flex flex-wrap gap-x-6 gap-y-3 pb-8 mb-8 border-b border-white/10">
+            {CARS.map((c) => (
               <button
-                key={t.id}
-                onClick={() => {
-                  sound.tick(true);
-                  setTab(t.id);
-                }}
-                className={`group relative flex shrink-0 items-center gap-4 py-2 text-left transition-colors duration-500 lg:w-full lg:py-[0.35rem] ${tab === t.id ? "text-bone" : "text-white/35 hover:text-white/70"}`}
+                key={c.id}
+                onClick={() => { sound.tick(); setBuild(defaultBuild(c.id)); }}
+                data-active={c.id === build.carId}
+                className={`label link-line pb-1 transition-colors duration-300 ${c.id === build.carId ? "text-bone" : "text-white/35 hover:text-white/75"}`}
               >
-                <span className="mono-num w-5 text-xs">{String(i + 1).padStart(2, "0")}</span>
-                <span className="display text-2xl lg:text-[2rem]">{t.label}</span>
-                <span className={`hidden h-px bg-racing transition-all duration-700 lg:block ${tab === t.id ? "w-10" : "w-0"}`} />
+                {c.name}
               </button>
             ))}
           </div>
 
-          <div className="mt-8 min-h-[13rem] border-t border-white/12 pt-7">
+          {/* section tabs */}
+          <nav aria-label="Configurator sections" className="no-scrollbar -mx-7 flex gap-2 overflow-x-auto px-7 lg:mx-0 lg:flex-col lg:gap-0 lg:overflow-visible lg:px-0">
+            {TABS.map((t, i) => (
+              <button
+                key={t.id}
+                onClick={() => { sound.tick(true); setTab(t.id); }}
+                className={`group relative flex shrink-0 items-center gap-4 py-2 lg:py-[0.45rem] text-left transition-colors duration-500 lg:w-full ${tab === t.id ? "text-bone" : "text-white/30 hover:text-white/65"}`}
+              >
+                <span className="mono-num w-5 shrink-0 text-[0.65rem] text-white/35">{String(i + 1).padStart(2, "0")}</span>
+                <span className="display text-[1.5rem] lg:text-[1.85rem] leading-none">{t.label}</span>
+                <span className={`hidden h-px bg-racing transition-all duration-700 lg:block ${tab === t.id ? "w-8 opacity-100" : "w-0 opacity-0"}`} />
+              </button>
+            ))}
+          </nav>
+
+          {/* options area */}
+          <div className="mt-auto pt-8 border-t border-white/10">
             <AnimatePresence mode="wait">
               <motion.div
                 key={tab}
-                initial={{ opacity: 0, y: 14 }}
-                animate={{ opacity: 1, y: 0, transition: { duration: 0.6, ease: EASE_OUT } }}
-                exit={{ opacity: 0, y: -8, transition: { duration: 0.25 } }}
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0, transition: { duration: 0.55, ease: EASE_OUT } }}
+                exit={{ opacity: 0, y: -8, transition: { duration: 0.2 } }}
               >
                 {optionsFor()}
               </motion.div>
@@ -355,52 +350,76 @@ export function Configurator({ build, setBuild }: { build: Build; setBuild: (b: 
           </div>
         </div>
 
-        <div className="mt-10 lg:pointer-events-auto lg:absolute lg:bottom-[6vh] lg:right-[4vw] lg:mt-0 lg:w-[22rem]">
-          <div className="label mb-5 flex items-center justify-between text-white/50">
-            <span>Your build</span>
-            <span className="text-white/30">{spec.name}</span>
+        {/* ══ CANVAS ═════════════════════════════════════════════ */}
+        <div className="relative w-full aspect-[4/3] sm:aspect-[16/9] lg:aspect-auto lg:h-auto lg:self-stretch">
+          <div ref={dragRef} data-cursor="drag" className="absolute inset-0">
+            <LazyCanvas className="absolute inset-0" camera={{ position: [5, 2, 6], fov: 30, near: 0.1, far: 70 }}>
+              <ConfigWorld build={build} tab={tab} drag={drag} quality={mobile ? "low" : "high"} />
+            </LazyCanvas>
+            <div className="pointer-events-none absolute inset-x-0 top-0 h-28 bg-gradient-to-b from-ink to-transparent" />
+            <div className="pointer-events-none absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-ink to-transparent" />
+            <div className="label pointer-events-none absolute bottom-6 left-1/2 -translate-x-1/2 tracking-widest text-white/30 text-[0.6rem]">
+              DRAG TO ORBIT
+            </div>
           </div>
-          <dl className="mb-6 hidden border-t border-white/12 lg:block">
+        </div>
+
+        {/* ══ RIGHT PANEL ════════════════════════════════════════ */}
+        <div className="flex flex-col px-7 pt-10 pb-10 sm:px-10 lg:px-10 lg:pt-16 lg:pb-12 border-t border-white/10 lg:border-t-0 lg:border-l lg:border-white/10 overflow-y-auto">
+
+          {/* your build header */}
+          <div className="label mb-6 flex items-center justify-between">
+            <span className="text-white/45">Your build</span>
+            <span className="text-white/25">{spec.name}</span>
+          </div>
+
+          {/* summary rows */}
+          <dl className="border-t border-white/10">
             {summary.map(([k, v]) => (
-              <div key={k} className="flex justify-between gap-6 border-b border-white/[0.07] py-[0.55rem]">
-                <dt className="label text-[0.58rem] text-white/35">{k}</dt>
-                <dd className="text-right text-[0.78rem] font-light text-white/80">{v}</dd>
+              <div key={k} className="flex items-baseline justify-between gap-6 border-b border-white/[0.07] py-[0.6rem]">
+                <dt className="label text-[0.58rem] uppercase tracking-wider text-white/30 shrink-0">{k}</dt>
+                <dd className="text-right text-[0.8rem] font-light leading-snug text-white/75 min-w-0">{v}</dd>
               </div>
             ))}
           </dl>
-          <div className="space-y-3 border-t border-white/12 pt-5">
-            <div className="flex items-baseline justify-between">
-              <span className="label text-white/45">Base</span>
-              <span className="mono-num text-lg text-white/80">{fmtPrice(pr.base)}</span>
+
+          {/* price block */}
+          <div className="mt-6 pt-0">
+            <div className="flex flex-col gap-[0.6rem] border-t border-white/10 pt-6">
+              <div className="flex items-baseline justify-between gap-4">
+                <span className="label text-[0.6rem] uppercase tracking-wider text-white/35">Base</span>
+                <span className="mono-num text-base text-white/70">{fmtPrice(pr.base)}</span>
+              </div>
+              <div className="flex items-baseline justify-between gap-4">
+                <span className="label text-[0.6rem] uppercase tracking-wider text-white/35">Customization</span>
+                <span className="mono-num text-base text-white/70">{pr.custom ? "+ " + fmtPrice(pr.custom) : "—"}</span>
+              </div>
             </div>
-            <div className="flex items-baseline justify-between">
-              <span className="label text-white/45">Customization</span>
-              <span className="mono-num text-lg text-white/80">{pr.custom ? "+ " + fmtPrice(pr.custom) : "—"}</span>
-            </div>
-            <div className="flex items-end justify-between border-t border-white/12 pt-4">
-              <span className="label text-white/45">Total</span>
-              <span className="mono-num text-4xl leading-none sm:text-[2.6rem]">
+
+            {/* total */}
+            <div className="flex items-end justify-between gap-4 mt-5 pt-5 border-t border-white/12">
+              <span className="label text-[0.6rem] uppercase tracking-wider text-white/35 pb-1">Total</span>
+              <span className="mono-num text-[2.6rem] leading-none tracking-tight">
                 <Total value={pr.total} />
               </span>
             </div>
-          </div>
-          <div className="mt-7 flex flex-col min-[421px]:flex-row min-[421px]:flex-wrap gap-3">
-            <Magnetic className="w-full min-[421px]:w-auto">
-              <button className="btn btn-red w-full min-[421px]:w-auto justify-center" onClick={save}>
-                Save build
-              </button>
-            </Magnetic>
-            <Magnetic className="w-full min-[421px]:w-auto">
-              <button
-                className="btn btn-ghost w-full min-[421px]:w-auto justify-center"
-                onClick={() => {
-                  sound.tick();
-                  setModal("request");
-                }}
-              >
-                Request experience
-              </button>
-            </Magnetic>
+
+            {/* action buttons */}
+            <div className="mt-7 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
+              <Magnetic>
+                <button className="btn btn-red w-full sm:w-auto" onClick={save}>
+                  Save build
+                </button>
+              </Magnetic>
+              <Magnetic>
+                <button
+                  className="btn btn-ghost w-full sm:w-auto"
+                  onClick={() => { sound.tick(); setModal("request"); }}
+                >
+                  Request experience
+                </button>
+              </Magnetic>
+            </div>
           </div>
         </div>
       </div>
